@@ -8,37 +8,27 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # Define classes
-rot:Trustee rdf:type owl:Class ;
+rot:Trustee a owl:Class ;
     rdfs:comment "An entity whose trustworthiness is being assessed." .
 
-rot:Trustor rdf:type owl:Class ;
+rot:Trustor a owl:Class ;
     rdfs:comment "An entity that places trust in the trustee." .
 
-rot:TrustRelationship rdf:type owl:Class ;
+rot:TrustRelationship a owl:Class ;
     rdfs:comment "A relationship indicating trust from the trustor to the trustee." .
 
 # Define properties
-rot:hasTrustee rdf:type owl:ObjectProperty ;
+rot:hasTrustee a owl:ObjectProperty ;
     rdfs:domain rot:TrustRelationship ;
     rdfs:range rot:Trustee ;
     rdfs:comment "The trustee in a trust relationship." .
 
-rot:hasTrustor rdf:type owl:ObjectProperty ;
+rot:hasTrustor a owl:ObjectProperty ;
     rdfs:domain rot:TrustRelationship ;
     rdfs:range rot:Trustor ;
     rdfs:comment "The trustor in a trust relationship." .
 
-rot:trustLevel rdf:type owl:DatatypeProperty ;
+rot:trustLevel a owl:DatatypeProperty ;
     rdfs:domain rot:TrustRelationship ;
     rdfs:range xsd:integer ;
     rdfs:comment "The level of trust in a trust relationship, represented as an integer." .
-
-# Example instances
-rot:Trustor1 rdf:type rot:Trustor .
-
-rot:Trustee1 rdf:type rot:Trustee .
-
-rot:TrustRelationship1 rdf:type rot:TrustRelationship ;
-    rot:hasTrustor rot:Trustor1 ;
-    rot:hasTrustee rot:Trustee1 ;
-    rot:trustLevel "7"^^xsd:integer .
