@@ -1,0 +1,44 @@
+# In https://link.springer.com/chapter/10.1007/978-3-030-33246-4_1 the authors
+# propose a reference ontology of trust, however, they do not actually provide
+# a vocabulary with it. In this document we provide that vocabulary.
+@prefix rot: <http://example.org/rot#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# Define classes
+rot:Trustee rdf:type owl:Class ;
+    rdfs:comment "An entity whose trustworthiness is being assessed." .
+
+rot:Trustor rdf:type owl:Class ;
+    rdfs:comment "An entity that places trust in the trustee." .
+
+rot:TrustRelationship rdf:type owl:Class ;
+    rdfs:comment "A relationship indicating trust from the trustor to the trustee." .
+
+# Define properties
+rot:hasTrustee rdf:type owl:ObjectProperty ;
+    rdfs:domain rot:TrustRelationship ;
+    rdfs:range rot:Trustee ;
+    rdfs:comment "The trustee in a trust relationship." .
+
+rot:hasTrustor rdf:type owl:ObjectProperty ;
+    rdfs:domain rot:TrustRelationship ;
+    rdfs:range rot:Trustor ;
+    rdfs:comment "The trustor in a trust relationship." .
+
+rot:trustLevel rdf:type owl:DatatypeProperty ;
+    rdfs:domain rot:TrustRelationship ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "The level of trust in a trust relationship, represented as an integer." .
+
+# Example instances
+rot:Trustor1 rdf:type rot:Trustor .
+
+rot:Trustee1 rdf:type rot:Trustee .
+
+rot:TrustRelationship1 rdf:type rot:TrustRelationship ;
+    rot:hasTrustor rot:Trustor1 ;
+    rot:hasTrustee rot:Trustee1 ;
+    rot:trustLevel "7"^^xsd:integer .
