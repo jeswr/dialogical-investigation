@@ -1,0 +1,28 @@
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix title: <https://www.imdb.com/title/> .
+@prefix schema: <http://schema.org/> .
+@prefix flix: <https://example.org/flix/> .
+@prefix rot: <https://purl.org/krdb-core/rot/rot#> .
+@prefix acl: <http://www.w3.org/ns/auth/acl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+# In the short term; this is something that the streaming platform would have to declare; but
+# in the long term even this kind of condition would probably belong to a 3rd party censoring
+# authority.
+
+# Also note that down the line this would also be *user specific*
+
+# Further note that this does not prevent the company from caching the remote rules and ratings.
+
+# Look into rule descriptions. It might be useful for displaying "error" messages to the user like.
+# "You are not old enough to watch this movie".
+{
+  ?user flix:canWatch ?movie .
+} <= {
+  ?movie schema:contentRating ?movieAgeRating .
+  ?user foaf:age ?userAge .
+
+  ?movieAgeRating math:notGreaterThan ?userAge .
+} .

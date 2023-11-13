@@ -1,0 +1,19 @@
+@prefix title: <https://www.imdb.com/title/> .
+@prefix schema: <http://schema.org/> .
+@prefix flix: <https://example.org/flix/> .
+@prefix rot: <https://purl.org/krdb-core/rot/rot#> .
+@prefix acl: <http://www.w3.org/ns/auth/acl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix ex: <http://example.org/> .
+
+# Look into rule descriptions. It might be useful for displaying "error" messages to the user like.
+# "You need to pay 10GBP in order to subscribe for the month"
+{
+  ?x flix:hasSubscription true .
+} <= {
+  ?x ex:payment [
+    # equivalentOf can be checked against an internal (or external) exchanges
+    ex:equivalentOfAtLeast "10GBP" ;
+    ex:time ?time ;
+  ]
+} .

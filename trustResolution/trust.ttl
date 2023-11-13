@@ -1,0 +1,32 @@
+@prefix ex: <https://example.org/> .
+@prefix rot: <https://purl.org/krdb-core/rot/rot#> .
+
+# For this demo we are using rot:trusts to mean blindly trusting *everything* that is stated. From there we can
+# make notions of trust more complex, but this is a good starting point.
+
+# In time it is going to be important to heavily distinguish between things like direct trust and endorsments.
+# For instance, I might trust someone because I have an SLA with them; but I wouldn't endorse them to you unless
+# you have an SLA with them as well. This is when concepts like X trusts Y for A become important.
+
+# Soon I think we will need to introduce concepts of "understands" for vocabs and "implements" for specifications
+# like verifiable credentials in order to enable dynamic communication.
+
+
+#################### ex:GovernmentCentralAuthority ####################
+
+ex:GovernmentCentralAuthority
+  # In practise this would be a list of hundreds+ of authorities that are trusted.
+  rot:trusts ex:GovernmentLicenseAuthority .
+
+#################### ex:GovernmentLicenseAuthority ####################
+
+ex:FooBar
+  rot:trusts ex:GovernmentCentralAuthority .
+
+#################### ex:GovernmentLicenseAuthority ####################
+
+{
+
+} => {
+
+} .

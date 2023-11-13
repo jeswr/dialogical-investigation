@@ -1,0 +1,23 @@
+@prefix math: <http://www.w3.org/2000/10/swap/math#> .
+@prefix title: <https://www.imdb.com/title/> .
+@prefix schema: <http://schema.org/> .
+@prefix flix: <https://example.org/flix/> .
+@prefix rot: <https://purl.org/krdb-core/rot/rot#> .
+@prefix acl: <http://www.w3.org/ns/auth/acl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+# Declaring that we trust title:tt15398776 (the webpage) as a source of information.
+flix:app
+  rot:trusts title:tt15398776 .
+
+flix:oppenheimer owl:sameAs [ schema:url title:tt15398776\/ ] .
+
+{
+  ?user acl:read ?movie .
+} <= {
+  ?user
+    flix:hasSubscription true ;
+    flix:canWatch ?movie .
+} .
