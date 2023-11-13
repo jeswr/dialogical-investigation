@@ -1,11 +1,8 @@
+# Priorities
+ - Trust resolution
+ - Backwards Chaining?
+
 # Surfaces Packaging
-
-
-
-
-
-
-
 
 https://github.com/Dexagod/N3-surfaces-packaging
 

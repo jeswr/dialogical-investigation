@@ -15,5 +15,5 @@
     # equivalentOf can be checked against an internal (or external) exchanges
     ex:equivalentOfAtLeast "10GBP" ;
     ex:time ?time ;
-  ]
+  ] .
 } .
