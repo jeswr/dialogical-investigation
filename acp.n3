@@ -1,0 +1,48 @@
+@prefix : <urn:example:> .
+@prefix acp: <http://www.w3.org/ns/solid/acp#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+@prefix list: <http://www.w3.org/2000/10/swap/list#> .
+
+:test1
+    :policy :PolicyX ;
+    :has :A , :B , :C .
+
+:PolicyX
+    a :Policy ;
+    :allOf :A, :B ;
+    :anyOf :C ;
+    :noneOf :D .
+
+(_:Pol _:Test) log:onNegativeSurface {
+    _:Test :policy _:Pol .
+    _:Pol a :Policy .
+
+    () log:onNegativeSurface {
+        (_:Field _:X) log:onNegativeSurface {
+            ( { _:Pol :allOf _:Field } { _:Test :has _:Field } ) log:forAllIn _:X .
+        } .
+    } .
+
+    () log:onNegativeSurface {
+        (_:Field _:List _:L _:X) log:onNegativeSurface {
+            ( _:Field { _:Pol :noneOf _:Field . _:Test :has _:Field } _:List ) log:collectAllIn _:X .
+            _:List list:length _:L .
+            _:L log:equalTo 0 .
+        } .
+    } .
+
+    () log:onNegativeSurface {
+        (_:Field) log:onNegativeSurface {
+            _:Pol :anyOf _:Field .
+            _:Test :has _:Field .
+        } .
+    } .
+
+    () log:onNegativeSurface {
+        :test :is true .
+    } .
+} .
+
+(_:S) log:onQuerySurface {
+    _:S :is true .
+} .

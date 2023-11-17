@@ -18,6 +18,9 @@
 
 # Look into rule descriptions. It might be useful for displaying "error" messages to the user like.
 # "You are not old enough to watch this movie".
+
+
+# Open question can / should we 
 {
   ?user flix:canWatch ?movie .
 } <= {

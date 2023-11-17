@@ -1,0 +1,31 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix acp: <http://www.w3.org/ns/solid/acp#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+(_:P _:C) log:onNegativeSurface {
+  (_:M) log:onNegativeSurface {
+    _:P acp:allOf _:M .
+    () log:onNegativeSurface {
+      _:C acp:satisfiesMatcher _:M .
+    } .
+  } .
+
+  () log:onNegativeSurface {
+    _:C acp:satisfiesPolicy _:P .
+  } .
+} .
+
+
+
+(_:context _:policy) log:onQuerySurface {
+  _:context acp:satisfiesPolicy _:policy .
+}.
+
+
+
+:c1 a acp:Context ;
+  acp:satisfiesMatcher :m1 .
+
+:p1 a acp:Policy ;
+  acp:allOf :m1 .
+

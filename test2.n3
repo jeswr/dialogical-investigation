@@ -1,0 +1,49 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix acp: <http://www.w3.org/ns/solid/acp#> .
+# @prefix : <http://example.org/socrates#>.
+
+# {
+#   ?policy acp:allOf ?anyOfMatcher .
+#   ?context acp:satisfiesMatcher ?anyOfMatcher .
+# } => {
+#   ?context acp:satisfies ?policy .
+# } .
+
+# :c1 acp:satisfiesMatcher :m1 .
+# :p1 acp:allOf :m1 .
+
+@prefix : <http://example.org/ns#> .
+@prefix log: <http://www.w3.org/2000/10/swap/log#> .
+
+(_:context _:policy) log:onNegativeSurface {
+    _:context a acp:Context .
+    _:policy a acp:Policy .
+    
+    # _:context acp:satisfiesMatcher _:matcher .
+    # _:policy acp:allOf _:matcher .
+
+    () log:onNegativeSurface {
+      (_:matcher) log:onNegativeSurface {
+      _:policy acp:allOf _:matcher .
+
+      () log:onNegativeSurface {
+        _:context acp:satisfiesMatcher _:matcher .
+      } .
+      } .
+    } .
+    
+    () log:onNegativeSurface {
+      _:context acp:satisfiesAllOf _:policy .
+    } .
+} .
+
+:c1 a acp:Context ;
+  acp:satisfiesMatcher :m1, :m2 .
+
+:p1 a acp:Policy ;
+  acp:allOf :m1, :m2 .
+
+(_:context _:policy) log:onQuerySurface {
+  _:context acp:satisfiesAllOf _:policy .
+}.
+

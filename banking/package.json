@@ -1,0 +1,20 @@
+{
+  "name": "banking",
+  "version": "1.0.0",
+  "description": "https://github.com/mockoon/mockoon/tree/main/packages/cli#installation",
+  "main": "index.js",
+  "scripts": {
+    "start": "mockoon-cli start --data ./petStore.json",
+    "build": "openapi-typescript ./petStore.json --output ./src/api.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@mockoon/cli": "^5.1.0"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^6.7.1"
+  }
+}

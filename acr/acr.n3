@@ -1,0 +1,154 @@
+@prefix acp: <http://www.w3.org/ns/solid/acp#> .
+@prefix acl: <http://www.w3.org/ns/auth/acl#> .
+@prefix ex: <http://example.org/> .
+
+
+
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix acp: <http://www.w3.org/ns/solid/acp#> .
+@prefix : <http://example.org/socrates#>.
+
+{
+  ?policy acp:allOf ?anyOfMatcher .
+  ?context acp:satisfiesMatcher ?anyOfMatcher .
+} => {
+  ?context acp:satisfies ?policy .
+} .
+
+:c1 acp:satisfiesMatcher :m1 .
+:p1 acp:allOf :m1 .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ex:policyA
+  acp:allow acl:Read ;
+  acp:allOf ex:matcherB, ex:matcherC .  
+
+
+ex:policyA
+  acp:deny acl:Read, acl:Write ;
+  acp:anyOf [
+    acp:client acp:PublicClient ;  
+  ] ,
+  acp:noneOf [
+    acp:client ex:clientC
+  ] .
+
+ex:policyB
+  acp:allow acl:Read ;
+  acp:anyOf [
+    acp:client acp:PublicClient ;
+  ] .
+
+{
+  @forAll ?anyOfMatcher.
+  ?policy acp:allOf ?anyOfMatcher .
+  ?context acp:satisfiesMatcher ?anyOfMatcher .
+  # ?policy acp:allOf ?allOfMatcher .
+  # ?policy acp:noneOf ?noneOfMatcher .
+} => {
+  ?matcher a acp:Matcher .
+} .
+
+
+{
+  @forAll ?anyOfMatcher.
+  ?policy acp:anyOf ?anyOfMatcher .
+  ?context acp:satisfiesMatcher ?anyOfMatcher .
+} => {
+  ?matcher a acp:Matcher .
+} .
+
+{
+  ?policy acp:allOf ?matcher .
+} => {
+  ?matcher a acp:Matcher .
+} .
+
+{
+  ?policy acp:noneOf ?matcher .
+} => {
+  ?matcher a acp:Matcher .
+} .
+
+
+
+# ACR Evaluation Written in n3
+{
+  ?context acp:satisfies ?matcher .
+} <= {
+  ?matcher a acp:Matcher .
+} .
+
+# function isSatisfiedPolicy(policy, context) {
+#   // If any 'none of' matcher is satisfied then the policy is not satisfied.
+#   for (const matcher of policy.noneOfMatchers)
+#       if (isSatisfiedMatcher(matcher, context))
+#           return false
+
+#   // If any 'all of' matcher is not satisfied then the policy is not satisfied.
+#   for (const matcher of policy.allOfMatchers)
+#       if (!isSatisfiedMatcher(matcher, context))
+#           return false
+
+#   // If any 'any of' matcher is satisfied then the policy is satisfied.
+#   for (const matcher of policy.anyOfMatchers)
+#       if (isSatisfiedMatcher(matcher, context))
+#           return true
+
+#   // At this point there are
+#   // - no satisfied 'none of' matchers,
+#   // - no unsatisfied 'all of' matchers and
+#   // - no satisfied 'any of' matchers.
+
+#   // Hence, the policy is satisfied if it has
+#   // - an 'all of' condition and
+#   // - no 'any of' condition.
+#   return policy.allOfMatchers.size !== 0 && policy.anyOfMatchers.size === 0
+# }
+
+
+
+
+
+
+# Test if a context satisfies a matcher
+{
+  ?context acp:satisfies ?matcher .
+} <= {
+  ?matcher a acp:Matcher .
+}
+
+# Matchers
+
+ex:policyA
+  acp:allow acl:Read ;
+  acp:allOf ex:matcherB, ex:matcherC .  
+
+
+ex:policyA
+  acp:deny acl:Read, acl:Write ;
+  acp:anyOf [
+    acp:client acp:PublicClient ;  
+  ] ,
+  acp:noneOf [
+    acp:client ex:clientC
+  ] .
+
+ex:policyB
+  acp:allow acl:Read ;
+  acp:anyOf [
+    acp:client acp:PublicClient ;
+  ] .
